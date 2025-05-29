@@ -1,123 +1,13 @@
-* {
-    padding: 0;
-    margin: 0;
-}
 
 body {
-    background: rgb(34, 193, 195);
-    background: linear-gradient(25deg, rgba(34, 193, 195, 1) 0%, rgba(235, 229, 218, 1) 100%);
-    height: 100vh;
-    /* Высота равна высоте окна браузера */
-    overflow-y: auto;
-    /* Добавляем вертикальную прокрутку */
-    font-family: 'Poppis', sans-serif;
-    font-weight: 400;
-    color: aliceblue;
-    font-size: 16px;
-
+    font-family: Arial, sans-serif;
 }
 
-img {
-    max-width: 100px;
-    max-height: 100px;
+header, footer {
+    background-color: #f0f0f0;
+    padding: 10px;
 }
 
-header {
-    position: relative;
-}
-
-header .logo {
-    /*исправить чтоб лого был на 1 уровне с nav */
-    text-transform: uppercase;
-    font-size: 29px;
-    font-weight: 800;
-    position: relative;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-    font-size: 16px;
-
-}
-
-.conteiner {
-    width: 800px;
-    margin: 0 auto;
-}
-
-header.conteiner h3 {
-    list-style: none;
-    color: #333;
-    text-align: center;
-    font-size: 40px;
-}
-
-.conteiner nav ul {
-    display: flex;
-    justify-content: space-around;
-    gap: 40px;
-    padding-left: 30%;
-    list-style: none;
-}
-
-.conteiner nav ul button {
-    font-weight: 1000;
-    background-color: orange;
-    font-size: 17px;
-    border-radius: 5px;
-}
-
-.sidebar {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    position: static;
-    /*исправить, чтоб он был не фиксированным*/
-    width: 200px;
-    height: 550px;
-    box-shadow: 0 5px 15px rgba(6, 114, 196, 0.897);
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar ul li {
-    padding: 20px;
-}
-
-.sidebar ul li a {
-    font-size: 20px;
-    color: white;
-    text-decoration: none;
-}
-
-.content {
-    margin-left: 200px;
-    padding: 20px;
-}
-
-/* секция с домами */
-.homes {
-    page-break-after: always;
-    /* Заставляет следующий элемент начинаться с новой "страницы" */
-    padding-top: 25px;
-    display: flex;
-    margin-left: 0;
-    gap: 50px;
-}
-
-header .homes .block {
-    font-size: 30px;
-}
-
-.homes .block span {
-    display: block;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.homes .block span img {
-    position: relative;
-    margin-right: 10px;
+nav a {
+    margin-right: 15px;
 }

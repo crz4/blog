@@ -1,6 +1,7 @@
+# товар/admin.py
 from django.contrib import admin
-from . import models
+from .models import Товар
 
-@admin.register(models.Article)
-class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['dt', 'title']
+@admin.register(Товар)
+class ТоварAdmin(admin.ModelAdmin):
+    list_display = ['название', 'цена', 'дата_добавления']

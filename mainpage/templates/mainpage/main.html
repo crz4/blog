@@ -1,24 +1,26 @@
+<!-- templates/товар/base.html -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Статьи</title>
+    <meta charset="UTF-8" />
+    <title>Интернет-магазин</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <h1>Список статей</h1>
-    <table border="1">
-        <tr>
-            <th>Дата</th>
-            <th>Заголовок</th>
-            <th>Текст</th>
-        </tr>
-        {% for item in data %}
-        <tr>
-            <td>{{ item.dt }}</td>
-            <td>{{ item.title }}</td>
-            <td>{{ item.text }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+<header>
+    <h1>Магазин товаров</h1>
+    <nav>
+        <a href="{% url 'товары' %}">Все товары</a>
+        <!-- Можно добавить другие пункты меню -->
+    </nav>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <p>&copy; 2024 Интернет-магазин</p>
+</footer>
 </body>
 </html>
