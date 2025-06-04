@@ -1,26 +1,6 @@
-<!-- templates/товар/base.html -->
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8" />
-    <title>Интернет-магазин</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-<header>
-    <h1>Магазин товаров</h1>
-    <nav>
-        <a href="{% url 'товары' %}">Все товары</a>
-        <!-- Можно добавить другие пункты меню -->
-    </nav>
-</header>
-
-<main>
-    {% block content %}{% endblock %}
-</main>
-
-<footer>
-    <p>&copy; 2024 Интернет-магазин</p>
-</footer>
-</body>
-</html>
+<h2>Вход</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Войти</button>
+</form>
