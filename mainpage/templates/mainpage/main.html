@@ -1,43 +1,41 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8" />
-<title>Таблица умножения</title>
-</head>
-<body>
-
-<h1>Создать таблицу умножения</h1>
-
-<label for="sizeInput">Введите размер таблицы:</label>
-<input type="number" id="sizeInput" min="1" />
-<button id="generateBtn">Показать таблицу</button>
-
-<div id="tableContainer"></div>
+<h2>Редактировать статью</h2>
+<form id="editForm">
+    <input type="text" id="title" name="title" placeholder="Заголовок" />
+    <br />
+    <textarea id="content" name="content" placeholder="Контент"></textarea>
+    <br />
+    <button type="submit">Обновить</button>
+</form>
 
 <script>
-document.getElementById('generateBtn').addEventListener('click', () => {
-    const size = document.getElementById('sizeInput').value;
-    if (!size || size < 1) {
-        alert('Пожалуйста, введите число больше 0');
-        return;
-    }
+const articleId = 1; // замените на актуальный ID статьи
 
-    fetch(`/generate_table/?size=${size}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Ошибка при получении данных');
-            }
-            return response.text();
-        })
-        .then(html => {
-            document.getElementById('tableContainer').innerHTML = html;
-        })
-        .catch(error => {
-            console.error(error);
-            alert('Произошла ошибка при получении таблицы');
-        });
+document.getElementById('editForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
+
+    fetch(`/articles/${articleId}/update/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            // В реальных проектах добавьте CSRF токен сюда
+        },
+        body: JSON.stringify({ title: title, content: content }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert('Статья успешно обновлена!');
+            // Можно обновить интерфейс или перенаправить пользователя
+        } else {
+            alert('Ошибка: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Ошибка:', error);
+        alert('Произошла ошибка при отправке данных.');
+    });
 });
 </script>
-
-</body>
-</html>

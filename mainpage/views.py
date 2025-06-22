@@ -1,31 +1,35 @@
-from django.http import HttpResponse
-from django.views.decorators.http import require_GET
+# views.py
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from .models import Article
 
-@require_GET
-def generate_table(request):
-    try:
-        size = int(request.GET.get('size', ''))
-        if size < 1:
-            raise ValueError
-    except (ValueError, TypeError):
-        return HttpResponse("Некорректный размер", status=400)
+@csrf_exempt  # Для простоты; лучше использовать CSRF токен в реальных проектах
+def update_article(request, article_id):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            title = data.get('title')
+            content = data.get('content')
 
-    # Генерируем HTML таблицу
-    table_html = '<table border="1" cellpadding="5">'
-    # Заголовки столбцов
-    table_html += '<tr><th></th>'
-    for i in range(1, size + 1):
-        table_html += f'<th>{i}</th>'
-    table_html += '</tr>'
+            article = Article.objects.get(id=article_id)
+            if title:
+                article.title = title
+            if content:
+                article.content = content
+            article.save()
 
-    # Строки таблицы
-    for row in range(1, size + 1):
-        table_html += f'<tr><th>{row}</th>'
-        for col in range(1, size + 1):
-            product = row * col
-            table_html += f'<td>{product}</td>'
-        table_html += '</tr>'
-
-    table_html += '</table>'
-
-    return HttpResponse(table_html)
+            return JsonResponse({
+                'status': 'success',
+                'article': {
+                    'id': article.id,
+                    'title': article.title,
+                    'content': article.content,
+                }
+            })
+        except Article.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Article not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid method'}, status=405)

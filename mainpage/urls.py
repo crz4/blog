@@ -2,5 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('generate_table/', views.generate_table, name='generate_table'),
+
+    path('articles/<int:article_id>/update/', views.update_article, name='update_article'),
 ]
