@@ -1,41 +1,16 @@
-<h2>Редактировать статью</h2>
-<form id="editForm">
-    <input type="text" id="title" name="title" placeholder="Заголовок" />
-    <br />
-    <textarea id="content" name="content" placeholder="Контент"></textarea>
-    <br />
-    <button type="submit">Обновить</button>
-</form>
+{% load static %}
 
-<script>
-const articleId = 1; // замените на актуальный ID статьи
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>Мой проект</title>
+</head>
+<body>
 
-document.getElementById('editForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+<h1>Пример страницы</h1>
 
-    const title = document.getElementById('title').value;
-    const content = document.getElementById('content').value;
+<script src="{% static 'js/script.js' %}"></script>
 
-    fetch(`/articles/${articleId}/update/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            // В реальных проектах добавьте CSRF токен сюда
-        },
-        body: JSON.stringify({ title: title, content: content }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            alert('Статья успешно обновлена!');
-            // Можно обновить интерфейс или перенаправить пользователя
-        } else {
-            alert('Ошибка: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Ошибка:', error);
-        alert('Произошла ошибка при отправке данных.');
-    });
-});
-</script>
+</body>
+</html>
