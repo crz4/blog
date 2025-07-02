@@ -1,35 +1,14 @@
-# views.py
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
-from .models import Article
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 
-@csrf_exempt  # Для простоты; лучше использовать CSRF токен в реальных проектах
-def update_article(request, article_id):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            title = data.get('title')
-            content = data.get('content')
+@login_required
+def subscribe(request, user_id):
+    target_user = get_object_or_404(User, id=user_id)
+    Subscription.objects.get_or_create(subscriber=request.user, subscribed_to=target_user)
+    return redirect('some_view')
 
-            article = Article.objects.get(id=article_id)
-            if title:
-                article.title = title
-            if content:
-                article.content = content
-            article.save()
-
-            return JsonResponse({
-                'status': 'success',
-                'article': {
-                    'id': article.id,
-                    'title': article.title,
-                    'content': article.content,
-                }
-            })
-        except Article.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Article not found'}, status=404)
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
-    else:
-        return JsonResponse({'status': 'error', 'message': 'Invalid method'}, status=405)
+@login_required
+def unsubscribe(request, user_id):
+    target_user = get_object_or_404(User, id=user_id)
+    Subscription.objects.filter(subscriber=request.user, subscribed_to=target_user).delete()
+    return redirect('some_view')
